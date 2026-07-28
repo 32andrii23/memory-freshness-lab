@@ -1,0 +1,25 @@
+{
+  "name": "memory-freshness-lab",
+  "version": "0.1.0",
+  "description": "A temporal benchmark harness for stale cross-session agent memory.",
+  "type": "module",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": { "memory-freshness": "./dist/cli.js" },
+  "files": ["dist", "README.md", "LICENSE", "datasets"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "demo": "tsx src/cli.ts --timeline datasets/sample.timeline.json --predictions datasets/sample.predictions.json"
+  },
+  "keywords": ["ai-agents", "memory", "evals", "benchmark", "rag"],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  },
+  "engines": { "node": ">=20" }
+}

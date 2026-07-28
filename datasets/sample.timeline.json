@@ -1,0 +1,24 @@
+[
+  {
+    "id": "account-plan-free-v1",
+    "key": "account.plan",
+    "value": "free",
+    "validFrom": "2026-01-01T00:00:00Z",
+    "validTo": "2026-03-01T00:00:00Z",
+    "source": "account-event:001"
+  },
+  {
+    "id": "account-plan-pro-v2",
+    "key": "account.plan",
+    "value": "pro",
+    "validFrom": "2026-03-01T00:00:00Z",
+    "source": "account-event:014"
+  },
+  {
+    "id": "account-region-eu-v1",
+    "key": "account.region",
+    "value": "eu",
+    "validFrom": "2026-01-01T00:00:00Z",
+    "source": "account-event:002"
+  }
+]
