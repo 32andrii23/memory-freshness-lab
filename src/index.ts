@@ -58,8 +58,15 @@ export function activeFactsAt(timeline: FactVersion[], observedAt: string): Fact
   return [...byKey.values()];
 }
 
+// Quality scores (precision, recall, coverage) are vacuously perfect when there
+// is nothing to score, so an empty denominator means 1.
 const ratio = (numerator: number, denominator: number): number =>
   denominator === 0 ? 1 : numerator / denominator;
+
+// Leak scores invert that: nothing returned means nothing leaked, so an empty
+// denominator means 0. Using `ratio` here would report a 100% leak rate.
+const leakRate = (numerator: number, denominator: number): number =>
+  denominator === 0 ? 0 : numerator / denominator;
 
 export function evaluateCase(timeline: FactVersion[], prediction: PredictionCase): CaseResult {
   const allById = new Map(timeline.map((fact) => [fact.id, fact]));
@@ -97,8 +104,8 @@ export function evaluateFreshness(timeline: FactVersion[], predictions: Predicti
       cases: cases.length,
       freshnessPrecision: average((item) => item.precision),
       freshnessRecall: average((item) => item.recall),
-      staleLeakRate: ratio(cases.reduce((sum, item) => sum + item.staleFactIds.length, 0), returnedCount),
-      unknownFactRate: ratio(cases.reduce((sum, item) => sum + item.unknownFactIds.length, 0), returnedCount),
+      staleLeakRate: leakRate(cases.reduce((sum, item) => sum + item.staleFactIds.length, 0), returnedCount),
+      unknownFactRate: leakRate(cases.reduce((sum, item) => sum + item.unknownFactIds.length, 0), returnedCount),
       provenanceCoverage: average((item) => item.provenanceCoverage),
     },
   };

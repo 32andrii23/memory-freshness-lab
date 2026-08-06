@@ -20,4 +20,13 @@ describe("memory freshness evaluation", () => {
     expect(report.cases[0]?.missingFactIds).toEqual(["plan-pro"]);
     expect(report.summary.staleLeakRate).toBe(0.5);
   });
+
+  it("reports zero leakage when the memory returns nothing", () => {
+    const report = evaluateFreshness(timeline, [
+      { id: "empty", observedAt: "2026-02-15T00:00:00Z", returnedFactIds: [] },
+    ]);
+    expect(report.summary.staleLeakRate).toBe(0);
+    expect(report.summary.unknownFactRate).toBe(0);
+    expect(report.summary.freshnessRecall).toBe(0);
+  });
 });
